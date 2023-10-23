@@ -18,20 +18,22 @@ import static commons.ScriptUtil.go;
 public class LoginController extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
         RequestDispatcher rd = req.getRequestDispatcher("/WEB-INF/templates/member/login.jsp");
         rd.forward(req, resp);
+
     }
 
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-       try {
-           LoginService service = ServiceManager.getInstance().loginService();
-           service.login(req);
+        try {
+            LoginService service = ServiceManager.getInstance().loginService();
+            service.login(req);
 
-           go(resp, req.getContextPath() + "/", "parent");
+            go(resp, req.getContextPath() + "/", "parent");
+        } catch (RuntimeException e) {
+            alertError(resp, e);
+        }
 
-       }catch (RuntimeException e){
-           alertError(resp, e);
-       }
     }
 }
