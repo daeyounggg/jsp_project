@@ -28,7 +28,8 @@ public class JoinController extends HttpServlet {
             JoinService service = ServiceManager.getInstance().joinService(); // 완성된 객체 가져오기
             service.join(req);
 
-            //resp.sendRedirect(req.getContextPath() + "/member/login");
+            String url = req.getContextPath() + "/member/login";
+            go(resp, url, "parent");
 
         } catch (RuntimeException e){
             alertError(resp, e);
